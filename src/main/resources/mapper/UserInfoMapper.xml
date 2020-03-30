@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zzm.dao.IUserInfoDao">
+    <select id="login" resultType="com.zzm.entity.UserInfo" parameterType="com.zzm.entity.UserInfo">
+             select * from userinfo where name = #{name}
+             and password = #{password}
+    </select>
+
+    <select id="isExistByName" resultType="com.zzm.entity.UserInfo" parameterType="String">
+              select * from userinfo where name = #{name}
+    </select>
+
+    <insert id="addUser" parameterType="com.zzm.entity.UserInfo">
+            insert into userinfo (name , password) values (#{name} , #{password})
+    </insert>
+    
+    <update id="changeSignatureByName" parameterType="com.zzm.entity.UserInfo">
+        update userinfo set signature = #{signature}
+        where name = #{name}
+    </update>
+
+    <update id="changeTelephoneByName" parameterType="com.zzm.entity.UserInfo">
+        update userinfo set telephone = #{telephone}
+        where name = #{name}
+    </update>
+
+    <update id="changeSexByName" parameterType="com.zzm.entity.UserInfo">
+        update userinfo set sex = #{sex}
+        where name = #{name}
+    </update>
+
+   <select id="getNameById" parameterType="int" resultType="com.zzm.entity.UserInfo">
+       select  * from userinfo where id = #{id}
+   </select>
+
+    <select id="getAllMyLike" parameterType="int" resultType="com.zzm.entity.Blog">
+        select * from blog where id in (select blogid from likeblog where uid = #{uid})
+    </select>
+</mapper>

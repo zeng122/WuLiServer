@@ -1,0 +1,60 @@
+@charset "utf-8";
+
+body{
+	padding: 0px;
+	margin: 0px;
+}
+
+#bg{
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	z-index: -1;
+}
+
+.loginBlock{
+	width: 350px;
+	height: 300px;
+	position: absolute;
+	left: 50%;
+	top:50%;
+	margin-left: -175px;
+	margin-top: -150px;
+}
+
+#loginTitle{
+	text-align: center;
+	font-size: 30px;
+	letter-spacing:10px;
+	color:darkorange;
+}
+
+.user ,.pass{
+	margin-top: 20px;
+	text-align: center;
+	font-size: 20px;
+}
+input.text{
+    width: 200px;
+	height: 20px;
+	border: 1px solid #ccc;
+	background: #fff;
+	font-size: 14px; 
+}
+
+.loginButton{
+	text-align: center;
+	margin-top: 30px;
+}
+
+.loginButton input{
+	height:40px;
+	width:100px;
+	border: 0px;
+	background-color:orangered;
+	font-size: 15px;
+	letter-spacing: 10px;
+	text-indent: 10px;
+	text-align: center;
+	cursor: pointer;
+}

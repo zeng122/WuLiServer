@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zzm.dao.IBlogDao">
+    <select id="getBlogsByUid" parameterType="int" resultType="com.zzm.entity.Blog">
+        select * from blog where uid = #{uid}
+    </select>
+
+    <select id="getUidByBlogId" parameterType="int" resultType="int">
+        select uid from blog where id = #{blogid}
+    </select>
+
+    <insert id="addBlog" parameterType="com.zzm.entity.Blog" useGeneratedKeys="true" keyProperty="id">
+         insert into blog (uid ,contend ,anonymous) values (#{uid},#{contend}, #{anonymous})
+    </insert>
+    
+    <select id="getRefrushBlog" resultType="com.zzm.entity.Blog">
+        select * from blog where anonymous = #{anonymous}  order by time desc limit #{num}
+    </select>
+    
+    <select id="getRefrushMyBlog" resultType="com.zzm.entity.Blog">
+        select * from blog where uid = #{uid} order by time desc limit #{num}
+    </select>
+
+    <select id="getId" parameterType="int" resultType="int">
+       SELECT c.rowNo from (SELECT blog.id, (@rowNum := @rowNum+1) as rowNo
+       FROM blog , (SELECT(@rowNum := 0)) b ORDER BY time desc) AS c where c.id = 8;
+    </select>
+
+    <select id="getNumById" parameterType="int" resultType="int">
+       SELECT c.rowNo from (SELECT blog.id, (@rowNum := @rowNum+1) as rowNo
+       FROM blog , (SELECT(@rowNum := 0)) b ORDER BY time desc) AS c where c.id = #{id};
+    </select>
+
+    <select id="getMoreBlog" resultType="com.zzm.entity.Blog">
+        select * from blog where anonymous = #{anonymous}  order by time desc limit #{start} ,#{end}
+    </select>
+
+    <select id="getMoreMyBlog" resultType="com.zzm.entity.Blog">
+        select * from blog where uid = #{uid} order by time desc limit #{start} ,#{end}
+    </select>
+    
+    <select id="isLikeBlog" resultType="com.zzm.entity.LikeBlog" parameterType="com.zzm.entity.LikeBlog">
+        select * from likeblog where uid = #{uid} and blogid = #{blogid}
+    </select>
+
+    <select id="isFavouBlog" resultType="com.zzm.entity.FavouBlog" parameterType="com.zzm.entity.FavouBlog">
+        select * from favoublog where uid = #{uid} and blogid = #{blogid}
+    </select>
+
+    <update id="addFavouNum" parameterType="int">
+      update blog set favounum = favounum+1 where id = #{id}
+    </update>
+
+    <update id="addLikeNum" parameterType="int">
+        update blog set likenum = likenum+1 where id =#{id}
+    </update>
+
+    <insert id="addFavou" parameterType="com.zzm.entity.FavouBlog">
+        insert into favoublog (uid , blogid) values (#{uid},#{blogid})
+    </insert>
+
+    <insert id="addLike" parameterType="com.zzm.entity.LikeBlog">
+        insert into likeblog (uid , blogid) values (#{uid},#{blogid})
+    </insert>
+
+    <update id="minusFavouNum" parameterType="int">
+      update blog set favounum = favounum-1 where id = #{id}
+    </update>
+
+    <update id="minusLikeNum" parameterType="int">
+        update blog set likenum = likenum-1 where id =#{id}
+    </update>
+
+    <delete id="minusFavou" parameterType="com.zzm.entity.FavouBlog">
+        delete from favoublog where uid = #{uid} and blogid = #{blogid}
+    </delete>
+
+    <delete id="minusLike" parameterType="com.zzm.entity.LikeBlog">
+        delete from likeblog where uid = #{uid} and blogid = #{blogid}
+    </delete>
+
+    <select id="getCommentByBlogId" parameterType="int" resultType="com.zzm.entity.Comment">
+        select * from comment where blogid = #{blogid}
+    </select>
+
+    <insert id="addComment" parameterType="com.zzm.entity.Comment">
+        insert into comment (blogid,contend,uid) values (#{blogid},#{contend},#{uid})
+    </insert>
+
+    <insert id="addJubao" parameterType="com.zzm.entity.Jubao">
+        insert into jubao (uid,blogid,reason) values (#{uid},#{blogid},#{reason})
+    </insert>
+
+
+    <select id="getAllJubao" resultType="com.zzm.entity.Jubao">
+        select * from jubao
+    </select>
+
+    <select id="getContendById" resultType="String" parameterType="int">
+        select contend from blog where id = #{id}
+    </select>
+
+    <delete id="deleteBlog" parameterType="int">
+        delete from blog where id = #{id}
+    </delete>
+
+    <delete id="deleteJubao" parameterType="int">
+        delete from jubao where id = #{id}
+    </delete>
+
+    <insert id="addBlogPic" parameterType="java.util.ArrayList">
+          insert into blogpic(blogid,picture) values
+          <foreach collection="list" item="item" separator=",">
+              (#{item.blogid},#{item.picture})
+          </foreach>
+    </insert>
+
+</mapper>
